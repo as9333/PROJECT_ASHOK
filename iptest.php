@@ -11,6 +11,7 @@ foreach($details as $x => $x_value)
     echo "Key=" . $x . ", Value=" . $x_value;
     echo "<br>";
 }
+echo " the city your currently in =" $details['city'];
 ?>
 </body>
 </html>

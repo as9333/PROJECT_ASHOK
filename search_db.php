@@ -17,6 +17,6 @@ if(isset($_POST['submit']))
 		$search = $_POST['search'];
 		echo "<br>";
 		echo "Searched for $search";
-		//$query = "SELECT
+		//$query = "SELECT * FROM 
 	}
 ?>

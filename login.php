@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE HTML>
 <html lang="zxx">
 
@@ -135,7 +138,8 @@
                 if($rows==1)
                 {
                     $_SESSION['username'] = $username;
-                    echo '<script>window.location="index.php"</script>';    //redirect user using js
+                    // echo $_SESSION["username"];
+                    echo '<script>window.location="user_logged.php"</script>';    //redirect user using js
                 }
                 else
                 {   

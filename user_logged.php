@@ -1,6 +1,8 @@
 <?php
-include("secure.php");
+session_start();
 ?>
+
+
 <!DOCTYPE HTML>
 <html lang="zxx">
 
@@ -48,7 +50,7 @@ include("secure.php");
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="index_user.php"><span class="text-bl">E</span>mployee</a></h1>
+                    <h1><a href="user_logged.php"><span class="text-bl">E</span>mployee</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -57,8 +59,18 @@ include("secure.php");
                         <label for="drop" class="toggle">Menu</label>
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
-                        <li>Welcome <?php echo $_SESSION['username']; ?>!</li>   
-                            
+                        <?php
+                        if(isset($_SESSION['username']) )
+                            {
+                                echo "<li>Welcome {$_SESSION['username']} </li>";
+                                echo '<li><a href="logout.php">Log Out</a></li>';
+                            }
+                        else
+                            {
+                                echo '<li><a href="login.php">Login</a></li>';
+                                echo '<li><a href="register.php">Register</a></li>';
+                            }
+                        ?>
                         <!-- <li>
                                 <!-- First Tier Drop Down -->
                           <!--      <label for="drop-2" class="toggle toogle-2">Pages <span class="fa fa-angle-down"

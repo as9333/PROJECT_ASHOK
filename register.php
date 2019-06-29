@@ -92,7 +92,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="loremipsum@email.com" name="email"
+                        <input type="email" class="form-control" placeholder="Email" name="email"
                             required="">
                     </div>
                     <div class="form-group">

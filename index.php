@@ -92,6 +92,13 @@ session_start();
                 <h3 class="text-wh font-weight-bold">Search and Find Your <span>Ideal</span> Employee</h3>
                 <p class="mt-2 text-li" id="find">Locate ideal employee near us</p>
                 <!-- form -->
+
+                         <ul>    
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="register.php">Register</a></li>
+                        </ul>
+
+
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form  method="post">
                         <div class="row">

@@ -539,6 +539,34 @@ li>a:only-child:after {
     position: relative;
 }
 
+/*no image for dashboard css settings*/
+.mian-content-wthree_no_image {
+    /*background: url(../images/banner.jpg) no-repeat top;*/
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: 50vw;
+    z-index: 1;
+    position: relative;
+    
+}
+
+/*style banner no image*/
+/*.style-banner_no_image {
+    padding-top: 18em;
+    max-width: 800px;
+    font-size: 56px;
+    letter-spacing: 1px;
+    color: #ffffff;
+    background: #fff;
+    padding: 0px 17px 5px;
+    font-size: 50px;
+    font-size: 18px;
+    letter-spacing: 1px;
+}*/
+
 /* banner text */
 .style-banner {
     padding-top: 18em;
@@ -564,6 +592,20 @@ li>a:only-child:after {
 
 /* //banner text */
 /* form */
+
+.form_textbox_styles label
+    {
+        display: inline-block;
+        text-align: right;
+        float: left;
+    }
+
+ .form_textbox_styles input{
+        display: inline-block;
+        text-align: left;
+        float: right;
+    }   
+
 .home-form-w3ls select.form-control {
     font-size: 15px;
     border: none;

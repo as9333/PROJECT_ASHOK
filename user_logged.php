@@ -63,6 +63,7 @@ session_start();
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
+                                echo '<li><a href="dashboard.php">Profile Settings</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
                             }
                         else

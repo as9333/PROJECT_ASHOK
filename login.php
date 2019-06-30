@@ -100,12 +100,12 @@ session_start();
                     <button type="submit" class="btn button-style-w3" name="btn">Login</button>
                     <div class="row sub-w3l mt-3 mb-5">
                         <div class="col-sm-6 sub-w3layouts_hub">
-                            <input type="checkbox" id="brand1" value="">
+                            <!-- <input type="checkbox" id="brand1" value=""> -->
                             <label for="brand1" class="text-li text-style-w3ls">
-                                <span></span>Remember me?</label>
+                                <!-- <span></span>Remember me?</label> -->
                         </div>
                         <div class="col-sm-6 forgot-w3l text-sm-right">
-                            <a href="#" class="text-li text-style-w3ls">Forgot Password?</a>
+                            <!-- <a href="#" class="text-li text-style-w3ls">Forgot Password?</a> -->
                         </div>
                     </div>
                     <p class="text-center dont-do text-style-w3ls text-li">Don't have an account?
@@ -138,7 +138,8 @@ session_start();
                 if($rows==1)
                 {
                     $_SESSION['username'] = $username;
-                    // echo $_SESSION["username"];
+                    $_SESSION['user_pass'] = md5($password);
+                    // echo $_SESSION['user_pass'];
                     echo '<script>window.location="user_logged.php"</script>';    //redirect user using js
                 }
                 else

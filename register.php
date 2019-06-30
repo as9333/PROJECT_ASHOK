@@ -152,7 +152,7 @@
                                  if($result)
                                  {
                                     echo '<script>alert("User Registered successfully")</script>';
-                                    echo '<script>window.location="index.php"</script>';
+                                    echo '<script>window.location="user_logged.php"</script>';
                                  }
                         }
 

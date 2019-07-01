@@ -3,8 +3,8 @@
 <?php
 require_once('db_connect.php');  //from this script we connect to db and the variables in that script can be accessed in this script
 
-//$ip = $_SERVER['REMOTE_ADDR'];  //the REMOTE_ADDR is used to  get client ip address 
-$ip = '111.92.75.204';								
+$ip = $_SERVER['REMOTE_ADDR'];  //the REMOTE_ADDR is used to  get client ip address 
+//$ip = '111.92.75.204';								
 echo $ip;
 echo "<br>";
 $exploded_ip = explode(".",$ip); 

@@ -14,6 +14,8 @@ if($retrn==1)
         echo '<script type="text/javascript">';
 		echo 'alert("Profile Deleted Successfully")';
 		echo '</script>';
+    session_unset(); 
+    session_destroy();
         header("Location: {$home_url}index.php");
 		exit(); 
     }

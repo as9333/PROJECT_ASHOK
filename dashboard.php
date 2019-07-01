@@ -63,7 +63,7 @@ session_start();
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
-                                
+                                echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
                             }
                         else
@@ -110,21 +110,21 @@ session_start();
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <div align="left" class="form_textbox_styles">
-                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="border: 0;
-                                                                                                                              outline: 0;
-                                                                                                                              background: transparent;
-                                                                                                                              border-bottom: 2px solid black;
-                                                                                                                              width: 200px;
-                                                                                                                              "type="text" name="cname">
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="<?php echo $_SESSION['username']; ?>" style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;
+                                                                            "type="text" name="cname">
                                         </h5>
 
                                         <br>
-                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input style="border: 0;
-                                                                                                                                  outline: 0;
-                                                                                                                                  background: transparent;
-                                                                                                                                  border-bottom: 2px solid black;
-                                                                                                                                  width: 200px;
-                                                                                                                                  type="Password" name="cpass">
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input type="password" placeholder="**********" style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="cpass">
                                         </h5>
                                         <br>
                                         <h5 class="text-wh font-weight-bold" >
@@ -186,11 +186,47 @@ session_start();
     <!-- ======================================php code starts here ===========================-->
 
     <?php
+            // echo $_SESSION['cname'];
+            // echo '<br>';
+            // echo $_SESSION['cpass'];
+            // echo '<br>';
+            // echo $_SESSION['cpass_no_md5'];
 
-        if (isset($_POST["find"])) 
+        if (isset($_POST["save"])) 
         {
             require_once('connect.php');
+
+            $_SESSION['cname'] = $_POST['cname'];
+            $_SESSION['cpass'] = md5($_POST['cpass']);
+            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+
+            
+
+            // header("Location: {$home_url}change_uname.php");
+            // exit();
+
+           
+            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
+                                                                                                // when only user name is changed cpass value is kept null thus the null md5
+            {
+                echo '<script>alert("Username Successfully Changed")</script>';
+                echo '<script>window.location="change_uname.php"</script>';
+                
+            }
+            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
+            {
+                echo '<script>alert("Password Successfully Changed")</script>';
+                echo '<script>window.location="change_pass.php"</script>';
+            }
+
+            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
+            {
+                echo '<script>alert("Username and Password Successfully Changed")</script>';
+                echo '<script>window.location="change_uname_pass.php"</script>';
+            }
+             
         }
+            
     ?>
 
 

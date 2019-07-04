@@ -112,8 +112,8 @@ session_start();
                                 <div class="form-group">
                                     <select required="" class="form-control" name="search">
                                         <option value="">Choose...</option>
-                                        <option value="1">PHP Developers</option>
-                                        <option value="2">Web Developers</option>
+                                        <option value="PHP_Developer">PHP Developers</option>
+                                        <option value="Web_Developer">Web Developers</option>
                                     </select>
                                 </div>
                            <!--     <div class="form-group">
@@ -139,10 +139,10 @@ session_start();
                                 <div class="form-group">
                                     <select required="" class="form-control" name="location">
                                         <option value="">Location</option>
-                                        <option value="1">Current Location</option>
-                                        <option value="2">Cochin</option>
-                                        <option value="3">Alappuzha</option>
-                                        <option value="4">Trivandrum</option>
+                                        <option value="Current Location">Current Location</option>
+                                        <option value="Cochin">Cochin</option>
+                                        <option value="Alappuzha">Alappuzha</option>
+                                        <option value="Trivandrum">Trivandrum</option>
                                     </select>
                                 </div>
                             </div>

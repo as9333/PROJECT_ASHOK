@@ -65,6 +65,7 @@ session_start();
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
                                 echo '<li><a href="dashboard.php">Profile Settings</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
+                                echo '<li><a href="list_pm.php">Messeges</a></li>';
                             }
                         else
                             {
@@ -164,7 +165,7 @@ session_start();
             require_once('connect.php');
             $_SESSION['location'] = $_POST['location'];
             $_SESSION['search'] = $_POST['search'];
-            echo '<script>window.location="search_db.php"</script>';
+            echo '<script>window.location="search_db_new.php"</script>';
         }
     ?>
 

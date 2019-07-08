@@ -7,10 +7,14 @@ $id = $_SESSION['userid'];
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+         <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+         <link href="css/style.css" rel='stylesheet' type='text/css' />
+         <link href="css/font-awesome.min.css" rel="stylesheet">
         <!-- <link href="<?php echo $design; ?>/style.css" rel="stylesheet" title="Style" /> -->
         <title>Personnal Messages</title>
     </head>
     <body>
+
     	<div class="header">
         	<!-- <a href="<?php echo $url_home; ?>"><img src="<?php echo $design; ?>/images/logo.png" alt="Members Area" /></a> -->
 	    </div>
@@ -36,6 +40,11 @@ $req2 = mysqli_query($con,$query2);
 
 // print_r($req2);
 ?>
+
+<?php include('header.php'); ?>
+<br>
+<br>
+<br>
 This is the list of your messages:<br />
 <a href="new_pm.php" class="link_new_pm">New PM</a><br />
 <h3>Unread Messages(<?php echo intval(mysqli_num_rows($req1)); ?>):</h3>

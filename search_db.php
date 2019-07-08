@@ -82,16 +82,16 @@ $rows = mysqli_num_rows($retrn);
                                         	while ($row = mysqli_fetch_assoc($retrn)) 
 											{ 
 												
-												// print_r($row);
-											    // echo "<tr>";
+												
 											    foreach ($row as $field => $value) 
 											    {     	
-											         // echo "<td>" . $value . "</td>";
+											         
 											         if ($field == "name") 
 											         {
 											         	// echo $value;
 											         	echo '<h5 class="text-wh font-weight-bold" style="color:black;">';
 											         	echo $value;
+											         	echo '<li><a href="list_pm.php">Messeges</a></li>';
 											         	echo '</h5>';
 											         	echo '<br>';
 											         }

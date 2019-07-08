@@ -65,6 +65,7 @@ session_start();
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
                                 echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
+                                echo '<li><a href="list_pm.php">Messeges</a></li>';
                             }
                         else
                             {

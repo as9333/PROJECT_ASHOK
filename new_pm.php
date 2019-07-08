@@ -6,6 +6,9 @@ include('connect.php');
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+         <link href="css/style.css" rel='stylesheet' type='text/css' />
+         <link href="css/font-awesome.min.css" rel="stylesheet">
        <!--  <link href="<?php echo $design; ?>/style.css" rel="stylesheet" title="Style" /> -->
         <title>New PM</title>
     </head>
@@ -96,6 +99,7 @@ if(isset($error))
 }
 //We display the form
 ?>
+<?php include('header.php'); ?>
 <div class="content">
 	<h1>New Personnal Message</h1>
     <form action="new_pm.php" method="post">

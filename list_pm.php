@@ -22,11 +22,19 @@ if(isset($_SESSION['username']))
 //We list his messages in a table
 //Two queries are executes, one for the unread messages and another for read messages
 
-$query1 = "SELECT 'm1.id', 'm1.title', 'm1.timestamp', count('m2.id') as reps, 'users.id' as userid, 'users.username' from pm as m1, pm as m2,users where (('m1.user1'='$id' and 'm1.user1read'='0' and 'users.id'='m1.user2') or ('m1.user2'='$id' and 'm1.user2read'='0' and 'users.id'='m1.user1')) and 'm1.id2'= AND 'm2.id'='m1.id' group by 'm1.id'                                            order by 'm1.id' desc";
+$query1 = 'SELECT m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="$id" and m1.user1read="no" and users.id=m1.user2) or (m1.user2="$id" and m1.user2read="no" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc';
 
-$query2 = "SELECT m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1='$id' and m1.user1read='1' and users.id=m1.user2) or (m1.user2='$id' and m1.user2read='1' and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc";
+$query2 = 'SELECT m1.id, m1.title, m1.timestamp, count(m2.id) as reps, users.id as userid, users.username from pm as m1, pm as m2,users where ((m1.user1="$id" and m1.user1read="yes" and users.id=m1.user2) or (m1.user2="$id" and m1.user2read="yes" and users.id=m1.user1)) and m1.id2="1" and m2.id=m1.id group by m1.id order by m1.id desc';
+
 $req1 = mysqli_query($con,$query1);
+
+// echo '<br>';
+// print_r($req1);
+// echo '<br>';
+
 $req2 = mysqli_query($con,$query2);
+
+// print_r($req2);
 ?>
 This is the list of your messages:<br />
 <a href="new_pm.php" class="link_new_pm">New PM</a><br />

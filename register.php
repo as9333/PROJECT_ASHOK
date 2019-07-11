@@ -132,7 +132,7 @@
             $conform_password = stripslashes($_REQUEST['Conform_Pass']);
             $conform_password = mysqli_real_escape_string($con,$conform_password);
 
-            $query = "SELECT * FROM `login` WHERE user_name='$username'";
+            $query = "SELECT * FROM `users` WHERE username='$username'";
             $retrn = mysqli_query($con,$query);
 
             $rows = mysqli_num_rows($retrn);
@@ -146,7 +146,7 @@
                      if ($password == $conform_password) 
                         {
                             
-                            $query = "INSERT into `login` (user_name, password, email)
+                            $query = "INSERT into `users` (username, password, email)
                                       VALUES ('$username', '".md5($password)."', '$email')";
                             $result = mysqli_query($con,$query);
                                  if($result)

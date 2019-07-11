@@ -9,7 +9,7 @@ $cname = $_SESSION['cname'];
 $cpass =  $_SESSION['cpass'];
 
 
-$query = "UPDATE `login` SET password='$cpass' WHERE user_name='$uname' AND password='$pass'";
+$query = "UPDATE `users` SET password='$cpass' WHERE username='$uname' AND password='$pass'";
 $retrn = mysqli_query($con,$query);
 
 // print_r($retrn);

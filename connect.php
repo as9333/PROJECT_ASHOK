@@ -19,11 +19,11 @@ else
 if (isset($_SESSION['username'])) 
 {
 	$username = $_SESSION['username'];
-	$query = "SELECT * FROM `login` WHERE user_name='$username'";
+	$query = "SELECT * FROM `users` WHERE username='$username'";
 	$retrn = mysqli_query($con,$query); 
 	
 	$row = mysqli_fetch_assoc($retrn);
-	$_SESSION['userid'] = $row['id_user'];
+	$_SESSION['userid'] = $row['id'];
 }
 
 ?>

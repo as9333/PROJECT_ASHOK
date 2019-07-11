@@ -41,11 +41,13 @@ if(isset($_POST['title'], $_POST['recip'], $_POST['message']))
 	if($_POST['title']!='' and $_POST['recip']!='' and $_POST['message']!='')
 	{
 		//We protect the variables
-		$title = mysql_real_escape_string($otitle);
-		$recip = mysql_real_escape_string($orecip);
-		$message = mysql_real_escape_string(nl2br(htmlentities($omessage, ENT_QUOTES, 'UTF-8')));
+		$title = mysqli_real_escape_string($con,$otitle);
+		$recip = mysqli_real_escape_string($con,$orecip);
+		$message = mysqli_real_escape_string($con,nl2br(htmlentities($omessage, ENT_QUOTES, 'UTF-8')));
 		//We check if the recipient exists
-		$dn1 = mysql_fetch_array(mysql_query('select count(id) as recip, id as recipid, (select count(*) from pm) as npm from users where username="'.$recip.'"'));
+
+		$query = 'SELECT count(id) as recip, id as recipid, (select count(*) from pm) as npm from users where username="'.$recip.'"';
+		$dn1 = mysqli_fetch_array(mysqli_query($con,$query));
 		if($dn1['recip']==1)
 		{
 			//We check if the recipient is not the actual user
@@ -53,12 +55,29 @@ if(isset($_POST['title'], $_POST['recip'], $_POST['message']))
 			{
 				$id = $dn1['npm']+1;
 				//We send the message
-				if(mysql_query('insert into pm (id, id2, title, user1, user2, message, timestamp, user1read, user2read)values("'.$id.'", "1", "'.$title.'", "'.$_SESSION['userid'].'", "'.$dn1['recipid'].'", "'.$message.'", "'.time().'", "yes", "no")'))
+
+				// $query = 'INSERT into pm (id, id2, title, user1, user2, message, timestamp, user1read, user2read)values("'.$id.'", "1", "'.$title.'", "'.$_SESSION['userid'].'", "'.$dn1['recipid'].'", "'.$message.'", "'.time().'", "yes", "no")';
+				$userid = $_SESSION['userid'];
+				$recipid = $dn1['recipid'];
+				// $query = 'INSERT into pm (id, id2, title, user1, user2, message, timestam, user1read, user2read)values("$id","1","$title","$userid","$recipid","$message","time","yes","no")';
+
+				$query = "INSERT into pm (id, id2, title, user1, user2, message, timestam, user1read, user2read)values('$id','1','$title','$userid','$recipid','$message','time','yes','no')";
+
+				// echo $id;
+				// echo '<br>';
+				// echo $title;
+				// echo '<br>';
+				// echo $userid;
+				// echo '<br>';
+				// echo $recipid;
+				// echo '<br>';
+				// echo $message;
+				// echo '<br>';
+				
+
+				if(mysqli_query($con,$query))
 				{
-?>
-<div class="message">The message has successfully been sent.<br />
-<a href="list_pm.php">List of my personnal messages</a></div>
-<?php
+
 					$form = false;
 				}
 				else

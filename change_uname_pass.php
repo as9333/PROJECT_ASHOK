@@ -9,7 +9,7 @@ $cname = $_SESSION['cname'];
 $cpass =  $_SESSION['cpass'];
 
 
-$query = "UPDATE `login` SET password='$cpass' WHERE user_name='$uname' AND password='$pass'";
+$query = "UPDATE `users` SET password='$cpass' WHERE username='$uname' AND password='$pass'";
 $retrn = mysqli_query($con,$query);
 
 // print_r($retrn);
@@ -28,7 +28,7 @@ if($retrn==1)
 		// exit(); 
   	}
 
- $query = "UPDATE `login` SET user_name='$cname' WHERE user_name='$uname' AND password='$cpass'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+ $query = "UPDATE `users` SET username='$cname' WHERE username='$uname' AND password='$cpass'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
  $retrn = mysqli_query($con,$query);
 
 // print_r($retrn);

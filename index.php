@@ -93,12 +93,6 @@ session_start();
                 <p class="mt-2 text-li" id="find">Locate ideal employee near us</p>
                 <!-- form -->
 
-                         <ul>    
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="register.php">Register</a></li>
-                        </ul>
-
-
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form  method="post">
                         <div class="row">

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('connect.php');
+$id = $_SESSION['userid'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,10 +23,12 @@ if(isset($_GET['id']))
 {
 $id = intval($_GET['id']);
 //We get the title and the narators of the discussion
-$req1 = mysql_query('select title, user1, user2 from pm where id="'.$id.'" and id2="1"');
-$dn1 = mysql_fetch_array($req1);
+
+$query = "SELECT title, user1, user2 from pm where id='$id' and id2='1'";
+$req1 = mysqli_query($con,$query);
+$dn1 = mysqli_fetch_array($req1);
 //We check if the discussion exists
-if(mysql_num_rows($req1)==1)
+if(mysqli_num_rows($req1)==1)
 {
 //We check if the user have the right to read this discussion
 if($dn1['user1']==$_SESSION['userid'] or $dn1['user2']==$_SESSION['userid'])
@@ -33,16 +36,19 @@ if($dn1['user1']==$_SESSION['userid'] or $dn1['user2']==$_SESSION['userid'])
 //The discussion will be placed in read messages
 if($dn1['user1']==$_SESSION['userid'])
 {
-	mysql_query('update pm set user1read="yes" where id="'.$id.'" and id2="1"');
+	$query = "UPDATE pm set user1read='yes' where id='$id' and id2='1'";	
+	mysqli_query($con,$query);
 	$user_partic = 2;
 }
 else
 {
-	mysql_query('update pm set user2read="yes" where id="'.$id.'" and id2="1"');
+	$query = "UPDATE pm set user2read='yes' where id='$id' and id2='1'";
+	mysqli_query($con,$query);
 	$user_partic = 1;
 }
 //We get the list of the messages
-$req2 = mysql_query('select pm.timestamp, pm.message, users.id as userid, users.username, users.avatar from pm, users where pm.id="'.$id.'" and users.id=pm.user1 order by pm.id2');
+$query = "SELECT pm.timestam, pm.message, users.id as userid, users.username, users.avatar from pm, users where pm.id='$id' and users.id=pm.user1 order by pm.id2";
+$req2 = mysqli_query($con,$query);
 //We check if the form has been sent
 if(isset($_POST['message']) and $_POST['message']!='')
 {
@@ -53,9 +59,16 @@ if(isset($_POST['message']) and $_POST['message']!='')
 		$message = stripslashes($message);
 	}
 	//We protect the variables
-	$message = mysql_real_escape_string(nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8')));
+	$message = mysqli_real_escape_string($con,nl2br(htmlentities($message, ENT_QUOTES, 'UTF-8')));
 	//We send the message and we change the status of the discussion to unread for the recipient
-	if(mysql_query('insert into pm (id, id2, title, user1, user2, message, timestamp, user1read, user2read)values("'.$id.'", "'.(intval(mysql_num_rows($req2))+1).'", "", "'.$_SESSION['userid'].'", "", "'.$message.'", "'.time().'", "", "")') and mysql_query('update pm set user'.$user_partic.'read="yes" where id="'.$id.'" and id2="1"'))
+
+	$reply = intval(mysqli_num_rows($req2))+1;
+	// print_r($reply);
+	$query1 = "INSERT into pm (id, id2, title, user1, user2, message, timestam, user1read, user2read)values('$id','$reply', '','$id', '','$message','time()', '', '')";
+	$query2 = "UPDATE pm set user.'$user_partic'read='yes' where id='$id' and id2='1'";
+
+
+	if(mysqli_query($con,$query1) and mysqli_query($con,$query2))
 	{
 ?>
 <div class="message">Your message has successfully been sent.<br />
@@ -64,6 +77,8 @@ if(isset($_POST['message']) and $_POST['message']!='')
 	}
 	else
 	{
+	// 	print_r(mysqli_query($con,$query1));
+	// print_r(mysqli_query($con,$query2));
 ?>
 <div class="message">An error occurred while sending the message.<br />
 <a href="read_pm.php?id=<?php echo $id; ?>">Go to the discussion</a></div>
@@ -82,7 +97,7 @@ else
         <th>Message</th>
     </tr>
 <?php
-while($dn2 = mysql_fetch_array($req2))
+while($dn2 = mysqli_fetch_array($req2))
 {
 ?>
 	<tr>
@@ -92,7 +107,7 @@ if($dn2['avatar']!='')
 	echo '<img src="'.htmlentities($dn2['avatar']).'" alt="Image Perso" style="max-width:100px;max-height:100px;" />';
 }
 ?><br /><a href="profile.php?id=<?php echo $dn2['userid']; ?>"><?php echo $dn2['username']; ?></a></td>
-    	<td class="left"><div class="date">Sent: <?php echo date('m/d/Y H:i:s' ,$dn2['timestamp']); ?></div>
+    	<!-- <td class="left"><div class="date">Sent: <?php echo date('m/d/Y H:i:s' ,$dn2['timestam']); ?></div> -->
     	<?php echo $dn2['message']; ?></td>
     </tr>
 <?php

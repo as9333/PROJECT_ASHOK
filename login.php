@@ -131,7 +131,7 @@ session_start();
             $password = stripslashes($_POST['Pass']);
             $password = mysqli_real_escape_string($con,$password);  
 
-            $query = "SELECT * FROM `login` WHERE user_name='$username' and password='".md5($password)."'";
+            $query = "SELECT * FROM `users` WHERE username='$username' and password='".md5($password)."'";
             $retrn = mysqli_query($con,$query);
 
             $rows = mysqli_num_rows($retrn);

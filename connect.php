@@ -4,6 +4,8 @@ $user = 'root';
 $dbname = 'profile_finder';
 $passwd = '';
 
+$home_url = 'http://localhost:8080/PROJECT_ASHOK/';
+
 $con = mysqli_connect($server,$user,$passwd,$dbname);
 if (!$con)
 	{

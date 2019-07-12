@@ -114,8 +114,10 @@ if($form)
 //We display a message if necessary
 if(isset($error))
 {
-	echo '<div class="message">'.$error.'</div>';
+	$_SESSION['error'] = $error;
+	echo '<div class="message">'.$error.'</div>';	
 }
+
 //We display the form
 ?>
 <?php include('header.php'); ?>
@@ -124,9 +126,9 @@ if(isset($error))
     <form action="new_pm.php" method="post">
 		Please fill the following form to send a personnal message.<br />
         <label for="title">Title</label><input type="text" value="<?php echo htmlentities($otitle, ENT_QUOTES, 'UTF-8'); ?>" id="title" name="title" /><br />
-        <label for="recip">Recipient<span class="small">(Username)</span></label><input type="text" value="<?php echo htmlentities($orecip, ENT_QUOTES, 'UTF-8'); ?>" id="recip" name="recip" /><br />
-        <label for="message">Message</label><textarea cols="40" rows="5" id="message" name="message"><?php echo htmlentities($omessage, ENT_QUOTES, 'UTF-8'); ?></textarea><br />
-        <input type="submit" value="Send" />
+        <label for="recip">To<span class="small"></span></label><input type="text" value="<?php echo htmlentities($orecip, ENT_QUOTES, 'UTF-8'); ?>" id="recip" name="recip" /><br />
+        <label for="message"></label><textarea placeholder="Message" cols="40" rows="5" id="message" name="message"><?php echo htmlentities($omessage, ENT_QUOTES, 'UTF-8'); ?></textarea><br />
+        <input type="submit" value="Send" name="btn" />
     </form>
 </div>
 <?php
@@ -137,6 +139,14 @@ else
 	echo '<div class="message">You must be logged to access this page.</div>';
 }
 ?>
+		  <!-- <?php 
+		   // $error = $_SESSION['error'];
+			// if (isset($_POST['btn']) and is_null($_SESSION['error'])) 
+			// {
+			 	 // echo '<script>alert("Message Send Successfully")</script>';
+	     //         echo '<script>window.location="list_pm.php"</script>'; 
+	        // }   	
+		 ?>  -->
 		<div class="foot"><a href="list_pm.php">Go to my personnal messages</a> 
 		</div>
 	</body>

@@ -1,7 +1,9 @@
 <?php
 session_start();
 include('connect.php');
-$id = $_SESSION['userid'];
+$id_user = $_SESSION['userid'];
+// echo "this is id in begining";
+// echo $id;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,7 +25,6 @@ if(isset($_GET['id']))
 {
 $id = intval($_GET['id']);
 //We get the title and the narators of the discussion
-
 $query = "SELECT title, user1, user2 from pm where id='$id' and id2='1'";
 $req1 = mysqli_query($con,$query);
 $dn1 = mysqli_fetch_array($req1);
@@ -63,10 +64,14 @@ if(isset($_POST['message']) and $_POST['message']!='')
 	//We send the message and we change the status of the discussion to unread for the recipient
 
 	$reply = intval(mysqli_num_rows($req2))+1;
+	// echo "this is reply:";
 	// print_r($reply);
-	$query1 = "INSERT into pm (id, id2, title, user1, user2, message, timestam, user1read, user2read)values('$id','$reply', '','$id', '','$message','time()', '', '')";
-	$query2 = "UPDATE pm set user.'$user_partic'read='yes' where id='$id' and id2='1'";
-
+	// echo "this is id:";
+	// echo $id;
+	// echo '<br>';
+	// echo "user{$user_partic}read";
+	$query1 = "INSERT into pm (id, id2, title, user1, user2, message, timestam, user1read, user2read)values('$id','$reply', '','$id_user', '','$message','time()', '', '')";
+	$query2 = "UPDATE pm set user{$user_partic}read='yes' where id='$id' and id2='1'";
 
 	if(mysqli_query($con,$query1) and mysqli_query($con,$query2))
 	{
@@ -77,8 +82,12 @@ if(isset($_POST['message']) and $_POST['message']!='')
 	}
 	else
 	{
-	// 	print_r(mysqli_query($con,$query1));
-	// print_r(mysqli_query($con,$query2));
+
+	 // 	$r1 = mysqli_query($con,$query1);
+		// $r2 = mysqli_query($con,$query2);
+		// print_r($r1);
+		// echo '<br>';
+		// print_r($r2);
 ?>
 <div class="message">An error occurred while sending the message.<br />
 <a href="read_pm.php?id=<?php echo $id; ?>">Go to the discussion</a></div>
@@ -89,26 +98,36 @@ else
 {
 //We display the messages
 ?>
+<?php include('header.php'); 
+echo '<br>';
+echo '<br>';
+echo '<br>';
+?>
 <div class="content">
-<h1><?php echo $dn1['title']; ?></h1>
+<h1>Subject:&nbsp<?php echo $dn1['title']; ?></h1>
 <table class="messages_table">
 	<tr>
-    	<th class="author">User</th>
+    	<th class="author">From</th>
         <th>Message</th>
     </tr>
 <?php
 while($dn2 = mysqli_fetch_array($req2))
 {
+	// print_r($dn2);
 ?>
 	<tr>
-    	<td class="author center"><?php
-if($dn2['avatar']!='')
-{
-	echo '<img src="'.htmlentities($dn2['avatar']).'" alt="Image Perso" style="max-width:100px;max-height:100px;" />';
-}
-?><br /><a href="profile.php?id=<?php echo $dn2['userid']; ?>"><?php echo $dn2['username']; ?></a></td>
-    	<!-- <td class="left"><div class="date">Sent: <?php echo date('m/d/Y H:i:s' ,$dn2['timestam']); ?></div> -->
-    	<?php echo $dn2['message']; ?></td>
+    	<td class="author center">
+    		<!-- <?php
+				//if($dn2['avatar']!='')
+				{
+					// echo '<img src="'.htmlentities($dn2['avatar']).'" alt="Image Perso" style="max-width:100px;max-height:100px;" />';
+				}
+			?> -->
+			<a href="profile.php?id=<?php echo $dn2['userid']; ?>"><?php echo $dn2['username']; ?></a>
+		</td>
+		<td class="left">
+		    <?php echo $dn2['message']; ?>			
+		</td>
     </tr>
 <?php
 }
@@ -118,8 +137,8 @@ if($dn2['avatar']!='')
 <h2>Reply</h2>
 <div class="center">
     <form action="read_pm.php?id=<?php echo $id; ?>" method="post">
-    	<label for="message" class="center">Message</label><br />
-        <textarea cols="40" rows="5" name="message" id="message"></textarea><br />
+    	<label for="message" class="center"></label><br />
+        <textarea cols="40" rows="5" name="message" id="message" placeholder="Messege"></textarea><br />
         <input type="submit" value="Send" />
     </form>
 </div>
@@ -147,7 +166,7 @@ else
 	echo '<div class="message">You must be logged to access this page.</div>';
 }
 ?>
-		<div class="foot"><a href="list_pm.php">Go to my personnal messages</a> 
-		</div>
+		<!-- <div class="foot"><a href="list_pm.php">Go to my personnal messages</a> 
+		</div> -->
 	</body>
 </html>

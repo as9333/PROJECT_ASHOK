@@ -2,7 +2,7 @@
 session_start();
 include('connect.php');
 $id = $_SESSION['userid'];
-echo $id;
+// echo $id;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -50,16 +50,20 @@ $req2 = mysqli_query($con,$query2);
 <br>
 <br>
 <br>
-This is the list of your messages:<br />
-<a href="new_pm.php" class="link_new_pm">New PM</a><br />
+<br />
+<a href="new_pm.php" class="link_new_pm">Send New Message</a><br />
 <h3>Unread Messages(<?php echo intval(mysqli_num_rows($req1)); ?>):</h3>
-<?php echo mysqli_num_rows($req1); ?>
 <table>
 	<tr>
-    	<th class="title_cell">Title</th>
-        <th>Nb. Replies</th>
-        <th>Participant</th>
-        <th>Date of creation</th>
+		<?php
+		if(intval(mysqli_num_rows($req1))!=0)
+		{
+    	echo '<th class="title_cell">Title</th>';
+        echo '<th>Replies</th>';
+        echo '<th>From</th>';
+        //echo '<th>Date of creation</th>';
+    	}
+        ?>
     </tr>
 <?php
 //We display the list of unread messages
@@ -69,7 +73,9 @@ while($dn1 = mysqli_fetch_array($req1))
 	<tr>
     	<td class="left"><a href="read_pm.php?id=<?php echo $dn1['id']; ?>"><?php echo htmlentities($dn1['title'], ENT_QUOTES, 'UTF-8'); ?></a></td>
     	<td><?php echo $dn1['reps']-1; ?></td>
-    	<td><a href="profile.php?id=<?php echo $dn1['userid']; ?>"><?php echo htmlentities($dn1['username'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+    	<!-- ************************************************************ SHOW USERNAME HYPERLLINKED ****************************************************-->
+    	<!-- <td><a href="profile.php?id=<?php echo $dn1['userid']; ?>"><?php echo htmlentities($dn1['username'], ENT_QUOTES, 'UTF-8'); ?></a></td> -->
+    	<td><?php echo htmlentities($dn1['username'], ENT_QUOTES, 'UTF-8'); ?></td>
     	<!-- <td><?php echo date('Y/m/d H:i:s' ,$dn1['timestam']); ?></td> -->
     </tr>
 <?php
@@ -90,9 +96,9 @@ if(intval(mysqli_num_rows($req1))==0)
 <table>
 	<tr>
     	<th class="title_cell">Title</th>
-        <th>Nb. Replies</th>
-        <th>Participant</th>
-        <th>Date or creation</th>
+        <th>Replies</th>
+        <th>From</th>
+        <!-- <th>Date or creation</th> -->
     </tr>
 <?php
 //We display the list of read messages
@@ -102,7 +108,9 @@ while($dn2 = mysqli_fetch_array($req2))
 	<tr>
     	<td class="left"><a href="read_pm.php?id=<?php echo $dn2['id']; ?>"><?php echo htmlentities($dn2['title'], ENT_QUOTES, 'UTF-8'); ?></a></td>
     	<td><?php echo $dn2['reps']-1; ?></td>
-    	<td><a href="profile.php?id=<?php echo $dn2['userid']; ?>"><?php echo htmlentities($dn2['username'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+    	<!-- ************************************************************ SHOW USERNAME HYPERLLINKED ****************************************************-->
+    	<!-- <td><a href="profile.php?id=<?php echo $dn2['userid']; ?>"><?php echo htmlentities($dn2['username'], ENT_QUOTES, 'UTF-8'); ?></a></td> -->
+    	<td><?php echo htmlentities($dn2['username'], ENT_QUOTES, 'UTF-8'); ?></td>
     	<!-- <td><?php echo date('Y/m/d H:i:s' ,$dn2['timestam']); ?></td> -->
     </tr>
 <?php

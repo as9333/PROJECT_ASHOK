@@ -5,7 +5,7 @@ session_start();
 <html lang="zxx">
 
 <head>
-    <title>Login</title>
+    <title>Admin Login</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
@@ -70,9 +70,9 @@ session_start();
                                     <li><a href="index.html" class="drop-text">Gallery</a></li>
                                 </ul>
                             </li>  -->
-                            <li><a href="index.php">Home</a></li>
+                            <!-- <li><a href="index.php">Home</a></li> -->
                             
-                            <li><a href="register.php">Register</a></li>
+                            <!-- <li><a href="register.php">Register</a></li> -->
                         </ul>
                     </nav>
                 </div>
@@ -87,7 +87,7 @@ session_start();
         <div class="container py-xl-5 py-lg-3">
             <!-- login  -->
             <div class="modal-body my-5 pt-4">
-                <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Login Now</h3>
+                <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Admin Login</h3>
                 <form method="post">
                     <div class="form-group">
                         <label class="col-form-label">Username</label>
@@ -108,10 +108,8 @@ session_start();
                             <!-- <a href="#" class="text-li text-style-w3ls">Forgot Password?</a> -->
                         </div>
                     </div>
-                    <p class="text-center dont-do text-style-w3ls text-li">Don't have an account?
-                        <a href="register.php" class="font-weight-bold text-li">
-                            Register Now</a>
-                    </p>
+                    
+                
                 </form>
             </div>
             <!-- //login -->

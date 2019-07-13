@@ -7,5 +7,6 @@ include('header.php');
 echo '<br>';
 echo '<br>';
 echo '<br>';
-echo $_SESSION['id'];
+$id = $_GET['id'];
+echo $id;
 ?>

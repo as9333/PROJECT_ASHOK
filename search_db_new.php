@@ -94,7 +94,7 @@ $rows = mysqli_num_rows($retrn);
 										echo '</h3>';
 										echo '</div>';
 										echo '<div class="col-md-6">';
-										echo '<a style="background-color: #fa7d8b; color: white;" href="profile_details.php?id=' . $id . '">View Details</a>';
+										echo '<a style="color: black;" href="profile_details.php?id=' . $id . '"><h3>View Details</h3></a>';
 										//echo '<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>';
 										echo '</div>';
 										echo '</div>';

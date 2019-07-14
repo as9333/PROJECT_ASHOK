@@ -48,7 +48,7 @@ session_start();
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="index.php"><span class="text-bl">E</span>mployee</a></h1>
+                    <h1><a href="index.php"><span class="text-bl">P</span>rofile Finder</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -129,23 +129,31 @@ session_start();
             $password = stripslashes($_POST['Pass']);
             $password = mysqli_real_escape_string($con,$password);  
 
-            $query = "SELECT * FROM `users` WHERE username='$username' and password='".md5($password)."'";
-            $retrn = mysqli_query($con,$query);
+            if ($username=='admin') 
+            {
 
-            $rows = mysqli_num_rows($retrn);
-                if($rows==1)
-                {
-                    $_SESSION['username'] = $username;
-                    $_SESSION['user_pass'] = md5($password);
-                    // echo $_SESSION['user_pass'];
-                    echo '<script>window.location="user_logged.php"</script>';    //redirect user using js
-                }
-                else
-                {   
-                    echo '<script>alert("Username and/or password incorrect")</script>';
-                    echo '<script>window.location="login.php"</script>';  //redirect user using js
-                }
-                
+                $query = "SELECT * FROM `users` WHERE username='$username' and password='".md5($password)."'";
+                $retrn = mysqli_query($con,$query);
+
+                $rows = mysqli_num_rows($retrn);
+                    if($rows==1)
+                    {
+                        $_SESSION['username'] = $username;
+                        $_SESSION['user_pass'] = md5($password);
+                        // echo $_SESSION['user_pass'];
+                        echo '<script>window.location="user_logged.php"</script>';    //redirect user using js
+                    }
+                    else
+                    {   
+                        echo '<script>alert("Username and/or password incorrect")</script>';
+                        echo '<script>window.location="index.php"</script>';  //redirect user using js
+                    }
+            }  
+            else
+            {
+                echo '<script>alert("Only admin can login")</script>';
+                echo '<script>window.location="index.php"</script>';
+            } 
 
              
         }

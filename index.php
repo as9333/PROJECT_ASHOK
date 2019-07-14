@@ -48,7 +48,7 @@ session_start();
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="index.php"><span class="text-bl">E</span>mployee</a></h1>
+                    <h1><a href="index.php"><span class="text-bl">P</span>rofile Finder</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -151,7 +151,7 @@ session_start();
             require_once('connect.php');
             $_SESSION['location'] = $_POST['location'];
             $_SESSION['search'] = $_POST['search'];
-            echo '<script>window.location="search_db.php"</script>';
+            echo '<script>window.location="search_db_new.php"</script>';
         }
     ?>
 

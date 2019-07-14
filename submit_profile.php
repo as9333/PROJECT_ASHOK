@@ -50,7 +50,7 @@ session_start();
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="user_logged.php"><span class="text-bl">E</span>mployee</a></h1>
+                    <h1><a href="user_logged.php"><span class="text-bl">P</span>rofile Finder</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -141,8 +141,8 @@ session_start();
                                         <div style="float: right; max-width: 60%;" >
                                             <select required="" class="form-control" name="job" >
                                                 <option value="">Choose...</option>
-                                                <option value="PHP_Developer">PHP Developers</option>
-                                                <option value="Web_Developer">Web Developers</option>
+                                                <option value="PHP Developer">PHP Developers</option>
+                                                <option value="Web Developer">Web Developers</option>
                                             </select>
                                         </div>
 

@@ -140,7 +140,7 @@ session_start();
                                 <div class="form-group">
                                     <select required="" class="form-control" name="location">
                                         <option value="">Location</option>
-                                        <option value="Current Location">Current Location</option>
+                                        <option value="Currentlocation">Current Location</option>
                                         <option value="Cochin">Cochin</option>
                                         <option value="Alappuzha">Alappuzha</option>
                                         <option value="Trivandrum">Trivandrum</option>
@@ -163,7 +163,38 @@ session_start();
         {
             
             require_once('connect.php');
-            $_SESSION['location'] = $_POST['location'];
+            
+            if ($_POST['location'] == "Currentlocation") 
+            {
+                //$currentlocation = file_get_contents('http://ashokmanojphilip.tk/ip_from_db.php'); //this is used to fetch location from my site 
+                //echo $currentlocation;
+                //$_SESSION['location'] = $currentlocation;
+
+                $ch = curl_init(); 
+
+                // set url 
+                curl_setopt($ch, CURLOPT_URL, "http://ashokmanojphilip.tk/ip_from_db.php"); 
+
+                //return the transfer as a string 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+                // $output contains the output string 
+                $currentlocation = curl_exec($ch);
+                $_SESSION['location'] = $currentlocation;
+                //echo $_SESSION['location'];
+                //echo $adminhelp; 
+                //var_dump($_SESSION['location']);
+
+                // close curl resource to free up system resources 
+                curl_close($ch);  
+
+                //echo '<script>window.location="correct_location.php"</script>';
+            }
+            else
+            {
+                $_SESSION['location'] = $_POST['location'];
+            }
+
             $_SESSION['search'] = $_POST['search'];
             echo '<script>window.location="search_db_new.php"</script>';
         }

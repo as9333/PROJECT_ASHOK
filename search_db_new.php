@@ -2,7 +2,18 @@
 
 session_start();
 require_once('connect.php');
+require_once('correct_location.php');
 $location = $_SESSION['location'];
+//echo "YOUR LOCATION $location";
+
+// if ($location == 'Ernakulam') 
+// {
+// 	echo "Entered Ernakulam correction";
+// 	$location = "Cochin";
+// }
+
+
+//echo $location;
 $search = $_SESSION['search'];
 ?>
 

@@ -154,7 +154,7 @@ session_start();
                                         <div style="float: right; max-width: 60%;">
                                             <select required="" class="form-control" name="location">
                                                 <option value="">Location</option>
-                                                <option value="Current Location">Current Location</option>
+                                                <option value="Currentlocation">Current Location</option>
                                                 <option value="Cochin">Cochin</option>
                                                 <option value="Alappuzha">Alappuzha</option>
                                                 <option value="Trivandrum">Trivandrum</option>
@@ -257,6 +257,24 @@ session_start();
             $cjob = stripslashes($_REQUEST['cjob']);
             $cjob = mysqli_real_escape_string($con,$cjob); 
             $location = $_POST['location'];
+            echo $location;
+
+            if ($location == "Currentlocation") 
+            {
+            	echo "Entered fn";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://ashokmanojphilip.tk/ip_from_db.php"); 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+                $currentlocation = curl_exec($ch);
+                $_SESSION['location'] = $currentlocation;
+                curl_close($ch);
+                require_once('correct_location.php');  
+                $location = $_SESSION['location'];
+                echo "NEW LOCATION $location";
+            }
+            
+
+
             $job = $_POST['job'];
             $name = $fname . " " . $lname;
             

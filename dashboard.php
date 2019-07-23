@@ -1,5 +1,13 @@
 <?php
 session_start();
+require_once('connect.php');
+$uname = $_SESSION['username'];
+$query = "SELECT * FROM users WHERE username = '$uname'";
+$retrn = mysqli_query($con,$query); 
+$rows = mysqli_fetch_assoc($retrn);
+$email = $rows['email'];
+$id = $rows['id'];
+
 ?>
 
 
@@ -65,7 +73,7 @@ session_start();
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
                                 echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
-                                echo '<li><a href="list_pm.php">Messeges</a></li>';
+                                echo '<li><a href="list_pm.php">Messages</a></li>';
                             }
                         else
                             {
@@ -127,6 +135,16 @@ session_start();
                                                                             width: 200px;"
                                                                             name="cpass">
                                         </h5>
+
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Email: &nbsp;<input type="text" placeholder="<?php echo $email ?>" style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="cemail">
+                                        </h5>
+
                                         <br>
                                         <h5 class="text-wh font-weight-bold" >
                                             <a style="color:black;" href="delete_profile.php">Delete My Profile</a>
@@ -197,33 +215,82 @@ session_start();
         {
             require_once('connect.php');
 
-            $_SESSION['cname'] = $_POST['cname'];
-            $_SESSION['cpass'] = md5($_POST['cpass']);
-            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+           // $_SESSION['cname'] = $_POST['cname'];
+           // $_SESSION['cpass'] = md5($_POST['cpass']);
+           // $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+            $email = $_POST['cemail'];
+            $cpass = md5($_POST['cpass']);
+            $cname = $_POST['cname'];
 
-            
-
-            // header("Location: {$home_url}change_uname.php");
-            // exit();
 
            
-            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
-                                                                                                // when only user name is changed cpass value is kept null thus the null md5
-            {
-                echo '<script>alert("Username Successfully Changed")</script>';
-                echo '<script>window.location="change_uname.php"</script>';
+            // if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
+            //                                                                                     // when only user name is changed cpass value is kept null thus the null md5
+            // {
+            //     echo '<script>alert("Username Successfully Changed")</script>';
+            //     echo '<script>window.location="change_uname.php"</script>';
                 
-            }
-            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
+            // }
+            // elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
+            // {
+            //     echo '<script>alert("Password Successfully Changed")</script>';
+            //     echo '<script>window.location="change_pass.php"</script>';
+            // }
+
+            // elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
+            // {
+            //     echo '<script>alert("Username and Password Successfully Changed")</script>';
+            //     echo '<script>window.location="change_uname_pass.php"</script>';
+            // }
+
+            if (trim($_POST['cname'] != "")) 
             {
-                echo '<script>alert("Password Successfully Changed")</script>';
-                echo '<script>window.location="change_pass.php"</script>';
+            
+              $query = "UPDATE `users` SET username='$cname' WHERE id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+              $retrn = mysqli_query($con,$query);
+
+              if($retrn==1)
+                {   
+                    $_SESSION['username'] = $cname;
+                    echo '<script>alert("Username changed successfully")</script>';
+                }
+              else 
+                {   
+                    echo '<script>alert("Username not changed")</script>';
+                }
             }
 
-            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
+
+            if (trim($_POST['cemail'] != "")) //trim fn is used to check wheather the post variable is null or not
             {
-                echo '<script>alert("Username and Password Successfully Changed")</script>';
-                echo '<script>window.location="change_uname_pass.php"</script>';
+            
+              $query = "UPDATE `users` SET email='$email' WHERE id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+              $retrn = mysqli_query($con,$query);
+
+              if($retrn==1)
+                {   
+                    echo '<script>alert("Email changed successfully")</script>';
+                }
+              else 
+                {   
+                    echo '<script>alert("Email not changed")</script>';
+                }
+            }
+
+            if (trim($_POST['cpass'] != "")) //trim fn is used to check wheather the post variable is null or not
+            {
+            
+              $query = "UPDATE `users` SET password='$cpass' WHERE id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+              $retrn = mysqli_query($con,$query);
+
+              if($retrn==1)
+                {   
+                    echo '<script>alert("Password changed successfully")</script>';
+                }
+              else 
+                {   
+                    echo '<script>alert("Password not changed")</script>';
+                }
             }
              
         }

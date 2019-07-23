@@ -110,11 +110,12 @@ $req2 = mysqli_query($con,$query2);
 							   </tr>
 							<?php
 							//We display the list of read messages
+							echo '<br>';
 							while($dn2 = mysqli_fetch_array($req2))
 							{
 							?>
 								<tr>
-							    	<br>
+							    	
 							 		<td width="50%"><a href="read_pm.php?id=<?php echo $dn2['id']; ?>"><?php echo htmlentities($dn2['title'], ENT_QUOTES, 'UTF-8'); ?></td>
 							    	<td width="30%"><?php echo $dn2['reps']-1; ?></td>
 							    	<!-- ************************************************************ SHOW USERNAME HYPERLLINKED ****************************************************-->

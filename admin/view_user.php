@@ -111,20 +111,22 @@ $rows = mysqli_num_rows($retrn);
 					{ 
 						foreach ($row as $field => $value) 
 							{    
-								$_SESSION['id'] = $row['id']; 	
+								//$_SESSION['id'] = $row['id'];
+								$id = $row['id']; 	
 								if ($field == "username") 
 									{
 										echo '<center>';
 										echo '<div class="row" style="height: 120px;">';
 										echo '<div class="col-md-6">';
 										echo '<h3 class="text-wh font-weight-bold" style="color:black;">';
-										echo "ID:&nbsp{$row['id']}&nbsp&nbsp&nbsp";
+										//echo "ID:&nbsp{$row['id']}&nbsp&nbsp&nbsp";
 										echo "User Name:&nbsp{$row['username']}&nbsp&nbsp&nbsp";
-										echo "Enamil:&nbsp{$row['email']}&nbsp&nbsp&nbsp";
+										//echo "Email:&nbsp{$row['email']}&nbsp&nbsp&nbsp";
 										echo '</h3>';
 										echo '</div>';
 										echo '<div class="col-md-6">';
-										echo '<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>';
+										echo '<a style="color: black;" href="profile_details.php?id=' . $id . '"><h3>View Details</h3></a>';
+										// echo '<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>';
 										echo '</div>';
 										echo '</div>';
 										echo '</center>';

@@ -56,14 +56,14 @@
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
-                                echo '<li><a href="dashboard.php">Profile Settings</a></li>';
+                               // echo '<li><a href="dashboard.php">Profile Settings</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
-                                echo '<li><a href="list_pm.php">Messeges</a></li>';
+                                echo '<li><a href="list_pm.php">Messages</a></li>';
                             }
                         else
                             {
-                                echo '<li><a href="login.php">Login</a></li>';
-                                echo '<li><a href="register.php">Register</a></li>';
+                                echo '<li><a href="index.php">Login</a></li>';
+                                //echo '<li><a href="register.php">Register</a></li>';
                             }
                         ?>
                             

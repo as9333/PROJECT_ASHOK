@@ -58,7 +58,7 @@
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
                                 echo '<li><a href="dashboard.php">Profile Settings</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
-                                echo '<li><a href="list_pm.php">Messeges</a></li>';
+                                echo '<li><a href="list_pm.php">Messages</a></li>';
                             }
                         else
                             {

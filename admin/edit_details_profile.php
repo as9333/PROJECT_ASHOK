@@ -1,5 +1,24 @@
 <?php
 session_start();
+require_once('connect.php');
+$id = $_GET['id'];
+if ($_SESSION['username']) 
+    {
+    
+        $query = "SELECT * FROM  users WHERE id='$id'";
+        $retrn = mysqli_query($con,$query); 
+        $rows = mysqli_num_rows($retrn);
+
+        $row = mysqli_fetch_assoc($retrn);
+
+        //print_r($row);
+        //echo $row['name'];
+
+        $uname = $row['username'];
+        //$id = $row['id'];
+        $email = $row['email'];
+
+    }
 ?>
 
 
@@ -7,7 +26,7 @@ session_start();
 <html lang="zxx">
 
 <head>
-    <title>Admin</title>
+    <title>PROFILE FINDER</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
@@ -50,7 +69,7 @@ session_start();
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="user_logged.php"><span class="text-bl">E</span>mployee</a></h1>
+                    <h1><a href="user_logged.php"><span class="text-bl">P</span>rofile Finder</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -63,9 +82,9 @@ session_start();
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
-                                //echo '<li><a href="user_logged.php">Home</a></li>';
+                                echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
-                                echo '<li><a href="list_pm.php">Messeges</a></li>';
+                                echo '<li><a href="list_pm.php">Messages</a></li>';
                             }
                         else
                             {
@@ -103,7 +122,7 @@ session_start();
     <div class="main-w3pvt mian-content-wthree_no_image text-center" id="home">
         <div class="container">
             <div class="style-banner mx-auto">
-                <h3 class="text-wh font-weight-bold" style="color:black;">Admin Panel</h3>               
+                <h3 class="text-wh font-weight-bold" style="color:black;">Profile Settings</h3>               
                 <!-- form -->
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form  method="post">
@@ -111,25 +130,34 @@ session_start();
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <div align="left" class="form_textbox_styles">
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="<?php echo $_SESSION['username']; ?>" style="border: 0;
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input  placeholder="<?php echo $uname ?>" style="border: 0;
                                                                             outline: 0;
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;
                                                                             "type="text" name="cname">
-                                        </h5> -->
+                                        </h5>
 
                                         <br>
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input type="password" placeholder="**********" style="border: 0;
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Email: &nbsp;<input type="text"  placeholder="<?php echo $email ?>" style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="cemail">
+                                        </h5>
+
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input type="Password" placeholder="**********" style="border: 0;
                                                                             outline: 0;
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;"
                                                                             name="cpass">
-                                        </h5> -->
+                                        </h5>
                                         <br>
                                         <h5 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="view_user.php">View Users</a>
+                                            <a style="color:black;" href="delete_profile.php?id=<?php echo $id ?>">Delete Profile</a>
                                         </h5>
                                         <br>
                                         <!-- <h5 class="text-wh font-weight-bold" >
@@ -177,7 +205,7 @@ session_start();
                                 </div> -->
                             </div>
                         </div>
-                        <!-- <button type="submit" class="btn btn_apt" name="save">Save</button> -->
+                        <button type="submit" class="btn btn_apt" name="save">Save</button>
                     </form>
                 </div>
                 <!-- //form -->
@@ -197,34 +225,60 @@ session_start();
         {
             require_once('connect.php');
 
-            $_SESSION['cname'] = $_POST['cname'];
-            $_SESSION['cpass'] = md5($_POST['cpass']);
-            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+            $cname = $_POST['cname'];
+            $cpass = md5($_POST['cpass']);
+            $cemail = $_POST['cemail'];
 
             
 
-            // header("Location: {$home_url}change_uname.php");
-            // exit();
+           if (trim($_POST['cname'] != "")) 
+           {
+           	
+           	  $query = "UPDATE `users` SET username='$cname' WHERE username='$uname' and id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+ 			  $retrn = mysqli_query($con,$query);
 
-           
-            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
-                                                                                                // when only user name is changed cpass value is kept null thus the null md5
-            {
-                echo '<script>alert("Username Successfully Changed")</script>';
-                echo '<script>window.location="change_uname.php"</script>';
-                
-            }
-            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
-            {
-                echo '<script>alert("Password Successfully Changed")</script>';
-                echo '<script>window.location="change_pass.php"</script>';
-            }
+ 			  if($retrn==1)
+			    {	
+			    	echo '<script>alert("Username changed successfully")</script>';
+			    }
+			  else 
+			  	{	
+			  		echo '<script>alert("Username not changed")</script>';
+			  	}
+           }
 
-            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
-            {
-                echo '<script>alert("Username and Password Successfully Changed")</script>';
-                echo '<script>window.location="change_uname_pass.php"</script>';
-            }
+           if (trim($_POST['cemail'] != "")) //trim fn is used to check wheather the post variable is null or not
+           {
+           	
+           	  $query = "UPDATE `users` SET email='$cemail' WHERE id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+ 			  $retrn = mysqli_query($con,$query);
+
+ 			  if($retrn==1)
+			    {	
+			    	echo '<script>alert("Email changed successfully")</script>';
+			    }
+			  else 
+			  	{	
+			  		echo '<script>alert("Email not changed")</script>';
+			  	}
+           }
+
+           if (trim($_POST['cpass'] != "")) //trim fn is used to check wheather the post variable is null or not
+           {
+           	
+           	  $query = "UPDATE `users` SET password='$cpass' WHERE id='$id'";  //pass is updated in 1st query (line 12) so new pass (cpass) is used
+ 			  $retrn = mysqli_query($con,$query);
+
+ 			  if($retrn==1)
+			    {	
+			    	echo '<script>alert("Password changed successfully")</script>';
+			    }
+			  else 
+			  	{	
+			  		echo '<script>alert("Password not changed")</script>';
+			  	}
+           }
+            
              
         }
             

@@ -115,6 +115,8 @@ session_start();
                                         <option value="">Choose...</option>
                                         <option value="PHP_Developer">PHP Developers</option>
                                         <option value="Web_Developer">Web Developers</option>
+                                        <option value="mobile">Mobile Application Developers</option>
+                                        <option value="system">System Analyst</option>
                                     </select>
                                 </div>
                            <!--     <div class="form-group">
@@ -144,6 +146,8 @@ session_start();
                                         <option value="Cochin">Cochin</option>
                                         <option value="Alappuzha">Alappuzha</option>
                                         <option value="Trivandrum">Trivandrum</option>
+                                        <option value="Calicut">Calicut</option>
+                                        <option value="Quilon">Kollam</option> 
                                     </select>
                                 </div>
                             </div>

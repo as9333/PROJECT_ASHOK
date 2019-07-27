@@ -143,6 +143,8 @@ session_start();
                                                 <option value="">Choose...</option>
                                                 <option value="PHP Developer">PHP Developers</option>
                                                 <option value="Web Developer">Web Developers</option>
+                                                <option value="mobile">Mobile Application Developers</option>
+                                                <option value="system">System Analyst</option>
                                             </select>
                                         </div>
 
@@ -158,6 +160,8 @@ session_start();
                                                 <option value="Cochin">Cochin</option>
                                                 <option value="Alappuzha">Alappuzha</option>
                                                 <option value="Trivandrum">Trivandrum</option>
+                                                <option value="Calicut">Calicut</option>
+                                                <option value="Quilon">Kollam</option> 
                                             </select>
                                         </div>
 
@@ -261,7 +265,7 @@ session_start();
 
             if ($location == "Currentlocation") 
             {
-            	echo "Entered fn";
+            	//echo "Entered fn";
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, "http://ashokmanojphilip.tk/ip_from_db.php"); 
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
@@ -270,7 +274,7 @@ session_start();
                 curl_close($ch);
                 require_once('correct_location.php');  
                 $location = $_SESSION['location'];
-                echo "NEW LOCATION $location";
+                //echo "NEW LOCATION $location";
             }
             
 

@@ -2,28 +2,18 @@
 
 session_start();
 require_once('connect.php');
-require_once('correct_location.php');
-$location = $_SESSION['location'];
-//echo "YOUR LOCATION $location";
 
-// if ($location == 'Ernakulam') 
-// {
-// 	echo "Entered Ernakulam correction";
-// 	$location = "Cochin";
-// }
-
-
-//echo $location;
-$search = $_SESSION['search'];
+$location = $_GET['location'];
+$job = $_GET['job'];
+// echo $location;
+// echo '<br>';
+// echo $job;
 ?>
 
 <?php
-$query = "SELECT * FROM  details_test WHERE location LIKE '%$location%' AND job LIKE '%$search%'";
+$query = "SELECT * FROM  details_test WHERE location LIKE '%$location%' AND job LIKE '%$job%'";
 $retrn = mysqli_query($con,$query); 
 $rows = mysqli_num_rows($retrn);
-// echo $location;
-// echo '<br>';
-// echo $search;
 ?>
 
 <?php include('header.php'); ?>
@@ -82,9 +72,40 @@ $rows = mysqli_num_rows($retrn);
 									echo '<br>';
 									echo '<br>';
 									echo '<br>';
+
+									// echo '<center>';
+									// echo '<div class="row" style="height: 120px;">';
+									// echo '<div class="col-md-6">';
+									// echo '<h4 class="text-wh font-weight-bold" style="color:black;">';
+									// echo 'ID&nbsp&nbsp&nbsp';
+									// echo 'User Name&nbsp&nbsp&nbsp';
+									// echo 'Email&nbsp&nbsp&nbsp';
+									// echo '</h4>';
+									// echo '</div>';
+									// echo '</div>';
+									// echo '</div>';	
+									// echo '</center>';
 								}
 
 							?>
+
+							<!-- <div class="container-fluid">
+								<center>
+		    						<div class="row" >
+										<div class="col-md-6">	
+											<h4 class="text-wh font-weight-bold" style="color:black;">
+												ID
+												User 
+												Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+											</h4>	
+										</div>
+										<div class="col-md-6">
+											<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>
+										</div>		
+									</div>	
+								<center>
+							</div>	 -->
+						</div>			
 					</div>		
 
 				</div>
@@ -97,19 +118,21 @@ $rows = mysqli_num_rows($retrn);
 						foreach ($row as $field => $value) 
 							{    
 								//$_SESSION['id'] = $row['id'];
-								$id = $row['id'];
+								$id = $row['id']; 	
 								if ($field == "name") 
 									{
 										echo '<center>';
 										echo '<div class="row" style="height: 120px;">';
 										echo '<div class="col-md-6">';
 										echo '<h3 class="text-wh font-weight-bold" style="color:black;">';
-										echo  $value;
+										//echo "ID:&nbsp{$row['id']}&nbsp&nbsp&nbsp";
+										echo "User Name:&nbsp{$row['name']}&nbsp&nbsp&nbsp";
+										//echo "Email:&nbsp{$row['email']}&nbsp&nbsp&nbsp";
 										echo '</h3>';
 										echo '</div>';
 										echo '<div class="col-md-6">';
-										echo '<a style="color: black;" href="profile_details.php?id=' . $id . '"><h3>View Details</h3></a>';
-										//echo '<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>';
+										echo '<a style="color: black;" href="developer_details.php?id=' . $id . '"><h3>View Details</h3></a>';
+										// echo '<button type="submit" class="btn btn_apt" name="details" style="background-color: #fa7d8b; color: white;">View Details</button>';
 										echo '</div>';
 										echo '</div>';
 										echo '</center>';

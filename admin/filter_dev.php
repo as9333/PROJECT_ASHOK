@@ -7,7 +7,7 @@ session_start();
 <html lang="zxx">
 
 <head>
-    <title>Admin</title>
+    <title>PROFILE FINDER</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
@@ -63,9 +63,9 @@ session_start();
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
-                                //echo '<li><a href="user_logged.php">Home</a></li>';
+                                echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
-                                echo '<li><a href="list_pm.php">Messages</a></li>';
+                                echo '<li><a href="list_pm.php">Messeges</a></li>';
                             }
                         else
                             {
@@ -103,7 +103,7 @@ session_start();
     <div class="main-w3pvt mian-content-wthree_no_image text-center" id="home">
         <div class="container">
             <div class="style-banner mx-auto">
-                <h3 class="text-wh font-weight-bold" style="color:black;">Admin Panel</h3>               
+                <h3 class="text-wh font-weight-bold" style="color:black;">Search Developer</h3>               
                 <!-- form -->
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form  method="post">
@@ -111,34 +111,46 @@ session_start();
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <div align="left" class="form_textbox_styles">
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="<?php echo $_SESSION['username']; ?>" style="border: 0;
-                                                                            outline: 0;
-                                                                            background: transparent;
-                                                                            border-bottom: 2px solid black;
-                                                                            width: 200px;
-                                                                            "type="text" name="cname">
-                                        </h5> -->
+                                        
+                                       
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Type Of Developer</h5>
+                                        <div style="float: right; max-width: 60%;" >
+                                            <select required="" class="form-control" name="job" >
+                                                <!-- <?php  if($job) {echo $fname;} ?> -->
+                                                <option value="">Choose...</option>
+                                                <option value="PHP_Developer">PHP Developers</option>
+                                                <option value="Web Developer">Web Developers</option>
+                                                <option value="Mobile">Mobile Application Developers</option>
+                                                <option value="System Analyst">System Analyst</option>
+                                            </select>
+                                        </div>
+
+                                        
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Location</h5>
+                                        <div style="float: right; max-width: 60%;">
+                                            <select required="" class="form-control" name="location">
+                                                <option value="">Location</option>
+                                                <option value="Currentlocation">Current Location</option>
+                                                <option value="Cochin">Cochin</option>
+                                                <option value="Alappuzha">Alappuzha</option>
+                                                <option value="Trivandrum">Trivandrum</option>
+                                                <option value="Calicut">Calicut</option>
+                                                <option value="Quilon">Kollam</option> 
+                                            </select>
+                                        </div>
 
                                         <br>
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input type="password" placeholder="**********" style="border: 0;
-                                                                            outline: 0;
-                                                                            background: transparent;
-                                                                            border-bottom: 2px solid black;
-                                                                            width: 200px;"
-                                                                            name="cpass">
-                                        </h5> -->
                                         <br>
-                                        <h4 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="view_user.php">View Users</a>
-                                        </h4>
                                         <br>
-                                        <h4 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="filter_dev.php">View Developers</a>
-                                        </h4>
-                                        <br>
-                                        <!-- <h5 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>
-                                        </h5> -->
+                                        
+
+                                        
+                                       
+                                      
                                         
 
                                     </div> 
@@ -181,7 +193,7 @@ session_start();
                                 </div> -->
                             </div>
                         </div>
-                        <!-- <button type="submit" class="btn btn_apt" name="save">Save</button> -->
+                        <button type="submit" class="btn btn_apt" name="search">search</button>
                     </form>
                 </div>
                 <!-- //form -->
@@ -189,7 +201,6 @@ session_start();
         </div>
     </div>
     <!-- ======================================php code starts here ===========================-->
-
     <?php
             // echo $_SESSION['cname'];
             // echo '<br>';
@@ -197,43 +208,40 @@ session_start();
             // echo '<br>';
             // echo $_SESSION['cpass_no_md5'];
 
-        if (isset($_POST["save"])) 
+        if (isset($_POST["search"])) 
         {
             require_once('connect.php');
+  
+            $location = $_POST['location'];
+            $job = $_POST['job'];
+            //echo $location;
 
-            $_SESSION['cname'] = $_POST['cname'];
-            $_SESSION['cpass'] = md5($_POST['cpass']);
-            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
-
+            if ($location == "Currentlocation") 
+            {
+                //echo "Entered fn";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://ashokmanojphilip.tk/ip_from_db.php"); 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+                $currentlocation = curl_exec($ch);
+                $_SESSION['location'] = $currentlocation;
+                curl_close($ch);
+                require_once('correct_location.php');  
+                $location = $_SESSION['location'];
+                //echo "NEW LOCATION $location";
+            }
             
+            echo '<script>window.location="view_dev.php?location=' . $location . '&job=' . $job . '"</script>';
 
-            // header("Location: {$home_url}change_uname.php");
-            // exit();
+           // echo '<a style="color: black;" href="profile_details.php?id=' . $id . '"><h3>View Details</h3></a>';
 
            
-            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
-                                                                                                // when only user name is changed cpass value is kept null thus the null md5
-            {
-                echo '<script>alert("Username Successfully Changed")</script>';
-                echo '<script>window.location="change_uname.php"</script>';
-                
-            }
-            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
-            {
-                echo '<script>alert("Password Successfully Changed")</script>';
-                echo '<script>window.location="change_pass.php"</script>';
-            }
 
-            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
-            {
-                echo '<script>alert("Username and Password Successfully Changed")</script>';
-                echo '<script>window.location="change_uname_pass.php"</script>';
-            }
+            
+                  
              
         }
             
     ?>
-
 
 </body>
 

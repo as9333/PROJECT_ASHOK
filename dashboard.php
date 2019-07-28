@@ -7,6 +7,7 @@ $retrn = mysqli_query($con,$query);
 $rows = mysqli_fetch_assoc($retrn);
 $email = $rows['email'];
 $id = $rows['id'];
+$is_reg = $rows['is_reg'];
 
 ?>
 
@@ -149,11 +150,25 @@ $id = $rows['id'];
                                         <h5 class="text-wh font-weight-bold" >
                                             <a style="color:black;" href="delete_profile.php">Delete My Profile</a>
                                         </h5>
-                                        <br>
-                                        <h5 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>
-                                        </h5>
                                         
+                                        
+                                        <?php
+
+                                        	if ($is_reg == 'yes') 
+                                        	{
+                                        		echo'<br>';
+                                        		echo '<h5 class="text-wh font-weight-bold">';
+                                            		echo'<a style="color:black;" href="submit_profile.php">Edit My Profile in Search Result</a>';
+                                        		echo'</h5>';
+                                        	}
+                                        	else
+                                        	{
+                                        		echo'<br>';
+                                        		echo '<h5 class="text-wh font-weight-bold">';
+                                            		echo'<a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>';
+                                        		echo'</h5>';
+                                        	}
+                                        ?>	
 
                                     </div> 
 

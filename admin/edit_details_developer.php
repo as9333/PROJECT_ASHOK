@@ -1,5 +1,28 @@
 <?php
 session_start();
+require_once('connect.php');
+$id = $_GET['id'];
+if ($_SESSION['username']) 
+    {
+    
+        $query = "SELECT * FROM  details_test WHERE id='$id'";
+        $retrn = mysqli_query($con,$query); 
+        $rows = mysqli_num_rows($retrn);
+
+        $row = mysqli_fetch_assoc($retrn);
+
+        //print_r($row);
+        //echo $row['name'];
+
+    $fname = $row['firstname']; 
+    $lname = $row['lastname'];
+    $email = $row['email'];
+    $pjob = $row['pastjob'];
+    $cjob = $row['currentJob'];
+    $job = $row['job'];
+    $location = $row['location'];
+
+    }
 ?>
 
 
@@ -7,7 +30,7 @@ session_start();
 <html lang="zxx">
 
 <head>
-    <title>Admin</title>
+    <title>PROFILE FINDER</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
@@ -63,7 +86,7 @@ session_start();
                         if(isset($_SESSION['username']) )
                             {
                                 echo "<li>Welcome {$_SESSION['username']} </li>";
-                                //echo '<li><a href="user_logged.php">Home</a></li>';
+                                echo '<li><a href="user_logged.php">Home</a></li>';
                                 echo '<li><a href="logout.php">Log Out</a></li>';
                                 echo '<li><a href="list_pm.php">Messages</a></li>';
                             }
@@ -103,7 +126,7 @@ session_start();
     <div class="main-w3pvt mian-content-wthree_no_image text-center" id="home">
         <div class="container">
             <div class="style-banner mx-auto">
-                <h3 class="text-wh font-weight-bold" style="color:black;">Admin Panel</h3>               
+                <h3 class="text-wh font-weight-bold" style="color:black;">Profile Settings</h3>               
                 <!-- form -->
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form  method="post">
@@ -111,30 +134,90 @@ session_start();
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <div align="left" class="form_textbox_styles">
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="<?php echo $_SESSION['username']; ?>" style="border: 0;
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Enter First Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="border: 0;
                                                                             outline: 0;
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;
-                                                                            "type="text" name="cname">
-                                        </h5> -->
+                                                                            "type="text" name="fname" placeholder="<?php if($fname) {echo $fname;} ?>" >
+                                        </h5>
 
                                         <br>
-                                        <!-- <h5 class="text-wh font-weight-bold" style="color:black;">Change Password: &nbsp;<input type="password" placeholder="**********" style="border: 0;
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Enter Last Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;
+                                                                            "type="text" name="lname" placeholder="<?php if($lname) {echo $lname;} ?>">
+                                        </h5>
+
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Enter Email: &nbsp;<input style="border: 0;
                                                                             outline: 0;
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;"
-                                                                            name="cpass">
-                                        </h5> -->
+                                                                            name="email" placeholder="<?php if($email) {echo $email;} ?>">
+                                        </h5>
+
+
+                                        
                                         <br>
-                                        <h4 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="view_user.php">View Users</a>
-                                        </h4>
                                         <br>
-                                        <h4 class="text-wh font-weight-bold" >
-                                            <a style="color:black;" href="filter_dev.php">View Developers</a>
-                                        </h4>
+                                        <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Location</h5>
+                                        <div style="float: right; max-width: 60%;">
+                                            <select required="" class="form-control" name="location">
+                                                <option value="">Location</option>
+                                                <option value="Currentlocation">Current Location</option>
+                                                <option value="Cochin">Cochin</option>
+                                                <option value="Alappuzha">Alappuzha</option>
+                                                <option value="Trivandrum">Trivandrum</option>
+                                                <option value="Calicut">Calicut</option>
+                                                <option value="Quilon">Kollam</option> 
+                                            </select>
+                                        </div>
+
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                        <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Type Of Developer</h5>
+                                        <div style="float: right; max-width: 60%;" >
+                                            <select required="" class="form-control" name="job" >
+                                                
+                                                <option value="">Choose...</option>
+                                                <option value="PHP_Developer">PHP Developers</option>
+                                                <option value="Web Developer">Web Developers</option>
+                                                <option value="Mobile Application Developer">Mobile Application Developers</option>
+                                                <option value="System Analyst">System Analyst</option>
+                                            </select>
+                                        </div>
+
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                       <h5 class="text-wh font-weight-bold" style="color:black;">Past Job &nbsp;<input style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="pjob" placeholder="<?php if($pjob) {echo $pjob;} ?>">
+                                        </h5>
+
+                                        
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Current Job &nbsp;<input style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="cjob" placeholder="<?php if($cjob) {echo $cjob;} ?>">
+                                        </h5>
+                                        
+                                        <h5 class="text-wh font-weight-bold" >
+                                            <a style="color:black;" href="delete_profile.php?id=<?php echo $id ?>">Delete Developer</a>
+                                        </h5>
                                         <br>
                                         <!-- <h5 class="text-wh font-weight-bold" >
                                             <a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>
@@ -181,7 +264,7 @@ session_start();
                                 </div> -->
                             </div>
                         </div>
-                        <!-- <button type="submit" class="btn btn_apt" name="save">Save</button> -->
+                        <button type="submit" class="btn btn_apt" name="save">Save</button>
                     </form>
                 </div>
                 <!-- //form -->
@@ -200,37 +283,61 @@ session_start();
         if (isset($_POST["save"])) 
         {
             require_once('connect.php');
+            $fname = empty($_REQUEST['fname']) ? $fname : $_REQUEST['fname'];
+            $fname = stripslashes($fname);
+            $fname = mysqli_real_escape_string($con,$fname);
 
-            $_SESSION['cname'] = $_POST['cname'];
-            $_SESSION['cpass'] = md5($_POST['cpass']);
-            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+            $lname = empty($_REQUEST['lname']) ? $lname : $_REQUEST['lname']; 
+            $lname = stripslashes($lname);
+            $lname = mysqli_real_escape_string($con,$lname);
 
+            $email = empty($_REQUEST['email']) ? $email : $_REQUEST['email']; 
+            $email = stripslashes($email);
+            $email = mysqli_real_escape_string($con,$email);
+
+            $pjob = empty($_REQUEST['pjob']) ? $pjob : $_REQUEST['pjob']; 
+            $pjob = stripslashes($pjob);
+            $pjob = mysqli_real_escape_string($con,$pjob); 
+
+            $cjob = empty($_REQUEST['cjob']) ? $cjob : $_REQUEST['cjob']; 
+            $cjob = stripslashes($cjob);
+            $cjob = mysqli_real_escape_string($con,$cjob);
+
+            $location = empty($_REQUEST['location']) ? $location : $_REQUEST['location'];  
+            $location = $_POST['location'];
+            //echo $location;
+
+            if ($location == "Currentlocation") 
+            {
+                //echo "Entered fn";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "http://ashokmanojphilip.tk/ip_from_db.php"); 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+                $currentlocation = curl_exec($ch);
+                $_SESSION['location'] = $currentlocation;
+                curl_close($ch);
+                require_once('correct_location.php');  
+                $location = $_SESSION['location'];
+                //echo "NEW LOCATION $location";
+            }
             
 
-            // header("Location: {$home_url}change_uname.php");
-            // exit();
 
-           
-            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
-                                                                                                // when only user name is changed cpass value is kept null thus the null md5
-            {
-                echo '<script>alert("Username Successfully Changed")</script>';
-                echo '<script>window.location="change_uname.php"</script>';
-                
-            }
-            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
-            {
-                echo '<script>alert("Password Successfully Changed")</script>';
-                echo '<script>window.location="change_pass.php"</script>';
-            }
+            $job = $_POST['job'];
+            $name = $fname . " " . $lname;
 
-            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
-            {
-                echo '<script>alert("Username and Password Successfully Changed")</script>';
-                echo '<script>window.location="change_uname_pass.php"</script>';
-            }
-             
-        }
+            
+          
+                $query = "UPDATE details_test SET pastjob = '$pjob', name = '$name', firstname = '$fname' , lastname = '$lname' , job = '$job' , location = '$location' , currentjob = '$cjob' , email = '$email' , username = '$uname'  WHERE id = '$id'";
+                $result = mysqli_query($con,$query);
+                if($result)
+                    {
+                        echo '<script>alert("developer updated successfully")</script>';
+                        echo '<script>window.location="user_logged.php"</script>';
+                    }
+                                      
+
+        } 
             
     ?>
 

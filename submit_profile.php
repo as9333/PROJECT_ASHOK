@@ -1,5 +1,37 @@
 <?php
 session_start();
+require_once('connect.php');
+$uname = $_SESSION['username'];
+$query = "SELECT * FROM users WHERE username = '$uname'";
+$retrn = mysqli_query($con,$query); 
+$rows = mysqli_fetch_assoc($retrn);
+$is_reg = $rows['is_reg'];
+
+if ($is_reg == 'yes') 
+{
+    $query = "SELECT * FROM details_test WHERE username = '$uname'";
+    $retrn = mysqli_query($con,$query); 
+    $rows = mysqli_fetch_assoc($retrn);
+
+
+    $fname = $rows['firstname']; 
+    $lname = $rows['lastname'];
+    $email = $rows['email'];
+    $pjob = $rows['pastjob'];
+    $cjob = $rows['currentJob'];
+    $job = $rows['job'];
+    $location = $rows['location'];
+}
+else
+{
+    $fname = ''; 
+    $lname = '';
+    $email = '';
+    $pjob = '';
+    $cjob = '';
+    $job = '';
+    $location = '';
+}
 ?>
 
 
@@ -116,7 +148,7 @@ session_start();
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;
-                                                                            "type="text" name="fname">
+                                                                            "type="text" name="fname" placeholder="<?php if($fname) {echo $fname;} ?>" >
                                         </h5>
 
                                         <br>
@@ -125,7 +157,7 @@ session_start();
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;
-                                                                            "type="text" name="lname">
+                                                                            "type="text" name="lname" placeholder="<?php if($lname) {echo $lname;} ?>">
                                         </h5>
 
                                         <br>
@@ -134,17 +166,18 @@ session_start();
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;"
-                                                                            name="email">
+                                                                            name="email" placeholder="<?php if($email) {echo $email;} ?>">
                                         </h5>
                                         <br>
                                         <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Type Of Developer</h5>
                                         <div style="float: right; max-width: 60%;" >
                                             <select required="" class="form-control" name="job" >
+                                                <!-- <?php  if($job) {echo $fname;} ?> -->
                                                 <option value="">Choose...</option>
                                                 <option value="PHP Developer">PHP Developers</option>
                                                 <option value="Web Developer">Web Developers</option>
-                                                <option value="mobile">Mobile Application Developers</option>
-                                                <option value="system">System Analyst</option>
+                                                <option value="Mobile Application Developers">Mobile Application Developers</option>
+                                                <option value="System Analyst">System Analyst</option>
                                             </select>
                                         </div>
 
@@ -173,7 +206,7 @@ session_start();
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;"
-                                                                            name="pjob">
+                                                                            name="pjob" placeholder="<?php if($pjob) {echo $pjob;} ?>">
                                         </h5>
 
                                         
@@ -183,7 +216,7 @@ session_start();
                                                                             background: transparent;
                                                                             border-bottom: 2px solid black;
                                                                             width: 200px;"
-                                                                            name="cjob">
+                                                                            name="cjob" placeholder="<?php if($cjob) {echo $cjob;} ?>">
                                         </h5>
                                        <!--  <h5 class="text-wh font-weight-bold" >
                                             <a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>
@@ -250,18 +283,29 @@ session_start();
         {
             require_once('connect.php');
 
-            $fname = stripslashes($_REQUEST['fname']);
-            $fname = mysqli_real_escape_string($con,$fname); 
-            $lname = stripslashes($_REQUEST['lname']);
-            $lname = mysqli_real_escape_string($con,$lname); 
-            $email = stripslashes($_REQUEST['email']);
+            $fname = empty($_REQUEST['fname']) ? $fname : $_REQUEST['fname'];
+            $fname = stripslashes($fname);
+            $fname = mysqli_real_escape_string($con,$fname);
+
+            $lname = empty($_REQUEST['lname']) ? $lname : $_REQUEST['lname']; 
+            $lname = stripslashes($lname);
+            $lname = mysqli_real_escape_string($con,$lname);
+
+            $email = empty($_REQUEST['email']) ? $email : $_REQUEST['email']; 
+            $email = stripslashes($email);
             $email = mysqli_real_escape_string($con,$email);
-            $pjob = stripslashes($_REQUEST['pjob']);
+
+            $pjob = empty($_REQUEST['pjob']) ? $pjob : $_REQUEST['pjob']; 
+            $pjob = stripslashes($pjob);
             $pjob = mysqli_real_escape_string($con,$pjob); 
-            $cjob = stripslashes($_REQUEST['cjob']);
-            $cjob = mysqli_real_escape_string($con,$cjob); 
+
+            $cjob = empty($_REQUEST['cjob']) ? $cjob : $_REQUEST['cjob']; 
+            $cjob = stripslashes($cjob);
+            $cjob = mysqli_real_escape_string($con,$cjob);
+
+            $location = empty($_REQUEST['location']) ? $location : $_REQUEST['location'];  
             $location = $_POST['location'];
-            echo $location;
+            //echo $location;
 
             if ($location == "Currentlocation") 
             {
@@ -281,17 +325,31 @@ session_start();
 
             $job = $_POST['job'];
             $name = $fname . " " . $lname;
-            
-            $query = "INSERT into details_test (pastjob, name, firstname, lastname, job, location, currentjob, email) VALUES ('$pjob', '$name', '$fname', '$lname', '$job', '$location', '$cjob', '$email')";
-            $result = mysqli_query($con,$query);
-            if($result)
-                {
-                    echo '<script>alert("User Registered successfully")</script>';
-                    echo '<script>window.location="dashboard.php"</script>';
-                }
-            
-           
-           
+
+            if ($is_reg == 'yes') 
+            {
+                $query = "UPDATE details_test SET pastjob = '$pjob', name = '$name', firstname = '$fname' , lastname = '$lname' , job = '$job' , location = '$location' , currentjob = '$cjob' , email = '$email' , username = '$uname'  WHERE username = '$uname'";
+                $result = mysqli_query($con,$query);
+                if($result)
+                    {
+                        echo '<script>alert("User updated successfully")</script>';
+                        echo '<script>window.location="dashboard.php"</script>';
+                    }
+            }
+            else
+            {
+                $query = "INSERT into details_test (pastjob, name, firstname, lastname, job, location, currentjob, email, username) VALUES ('$pjob', '$name', '$fname', '$lname', '$job', '$location', '$cjob', '$email', '$uname')";
+                $result = mysqli_query($con,$query);
+                if($result)
+                    {
+                        echo '<script>alert("User Registered successfully")</script>';
+                        echo '<script>window.location="dashboard.php"</script>';
+                    }
+
+                $query = "UPDATE users SET is_reg = 'yes' WHERE username = '$uname'";
+                $result = mysqli_query($con,$query);    
+            }
+                  
              
         }
             

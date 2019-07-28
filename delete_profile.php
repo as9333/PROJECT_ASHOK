@@ -9,6 +9,9 @@ $pass = $_SESSION['user_pass'];
 $query = "DELETE FROM `users` WHERE username='$uname' AND password='$pass'";
 $retrn = mysqli_query($con,$query);
 
+$query = "DELETE FROM `details_test` WHERE username='$uname'";
+$retrn = mysqli_query($con,$query);
+
 if($retrn==1)
     {
         echo '<script type="text/javascript">';

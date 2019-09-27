@@ -21,6 +21,7 @@ if ($_SESSION['username'])
     $cjob = $row['currentJob'];
     $job = $row['job'];
     $location = $row['location'];
+    $uname = $row['username'];
 
     }
 ?>

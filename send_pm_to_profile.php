@@ -31,7 +31,7 @@ $query = "SELECT * FROM  details_test WHERE id='$id'";
 		$retrn = mysqli_query($con,$query); 
 		$rows = mysqli_num_rows($retrn);
 		$row = mysqli_fetch_assoc($retrn);
-		$name = $row['name'];
+		$name = $row['firstname'];
 //We check if the form has been sent
 if(isset($_POST['title'], $_POST['recip'], $_POST['message']))
 {

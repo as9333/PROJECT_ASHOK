@@ -136,9 +136,28 @@ session_start();
                                             <a style="color:black;" href="filter_dev.php">View Developers</a>
                                         </h4>
                                         <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Add Location: &nbsp;<input type="text"   style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="addlocation">
+                                        </h5>
+
+                                        <br>
+                                        <h5 class="text-wh font-weight-bold" style="color:black;">Add Category: &nbsp;<input type="text"   style="border: 0;
+                                                                            outline: 0;
+                                                                            background: transparent;
+                                                                            border-bottom: 2px solid black;
+                                                                            width: 200px;"
+                                                                            name="addcat">
+                                        </h5>
+
+                                        <br>
                                         <!-- <h5 class="text-wh font-weight-bold" >
                                             <a style="color:black;" href="submit_profile.php">Show My Profile in Search Result</a>
                                         </h5> -->
+                                        <button type="submit" class="btn btn_apt" name="save">Save</button>
                                         
 
                                     </div> 
@@ -201,9 +220,8 @@ session_start();
         {
             require_once('connect.php');
 
-            $_SESSION['cname'] = $_POST['cname'];
-            $_SESSION['cpass'] = md5($_POST['cpass']);
-            $_SESSION['cpass_no_md5'] = $_POST['cpass'];
+            $addlocation = $_POST['addlocation'];
+            $addcat = $_POST['addcat'];
 
             
 
@@ -211,25 +229,34 @@ session_start();
             // exit();
 
            
-            if ($_SESSION['cname'] && $_SESSION['cpass'] == 'd41d8cd98f00b204e9800998ecf8427e') // d41d8cd98f00b204e9800998ecf8427e is a md5 code which is null in value
-                                                                                                // when only user name is changed cpass value is kept null thus the null md5
+            
+            if($addlocation)
             {
-                echo '<script>alert("Username Successfully Changed")</script>';
-                echo '<script>window.location="change_uname.php"</script>';
-                
-            }
-            elseif ($_SESSION['cpass'] && !$_SESSION['cname']) 
-            {
-                echo '<script>alert("Password Successfully Changed")</script>';
-                echo '<script>window.location="change_pass.php"</script>';
+             
+             $query = "INSERT into `location` (location)
+                                      VALUES ('$addlocation')";
+                            $result = mysqli_query($con,$query);
+                                 if($result)
+                                 {
+                                    echo '<script>alert("Location added successfully")</script>';
+                                    //echo '<script>window.location="user_logged.php"</script>';
+                                 }
             }
 
-            elseif ($_SESSION['cpass'] && $_SESSION['cname']) 
+
+            if($addcat)
             {
-                echo '<script>alert("Username and Password Successfully Changed")</script>';
-                echo '<script>window.location="change_uname_pass.php"</script>';
+            	 $query = "INSERT into `category` (category)
+                                      VALUES ('$addcat')";
+                            $result = mysqli_query($con,$query);
+                                 if($result)
+                                 {
+                                    echo '<script>alert("Category added successfully")</script>';
+                                    //echo '<script>window.location="user_logged.php"</script>';
+                                 }
             }
-             
+        
+
         }
             
     ?>

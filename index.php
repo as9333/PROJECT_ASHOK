@@ -98,14 +98,36 @@ session_start();
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <select required="" class="form-control" name="search">
-                                        <option value="">Choose...</option>
+                                    <!-- <select required="" class="form-control" name="search"> -->
+
+                                        <?php   
+                                                require_once('connect.php');
+                                                $sql = "SELECT category FROM category";
+                                                $result = mysqli_query($con,$sql);
+                                                //echo "<div style=float: right; max-width: 60%; >";
+                                                //echo "<select required="" class=form-control name='location'>";
+                                                //echo "<option value=>Choose...</option>";
+                                                ?>
+
+                                                <select required="" class="form-control" name="search">
+                                                <option value="">Choose...</option>
+
+                                                <?php
+                                                while ($row = mysqli_fetch_array($result)) 
+                                                    {
+                                                        echo "<option value='" . $row['category'] ."'>" . $row['category'] ."</option>";
+                                                    }
+                                                echo "</select>";
+                                                echo "</div>";
+                                                ?>
+
+                                        <!-- <option value="">Choose...</option>
                                         <option value="PHP_Developer">PHP Developers</option>
                                         <option value="Web_Developer">Web Developers</option>
                                         <option value="mobile">Mobile Application Developers</option>
                                         <option value="system">System Analyst</option>
                                     </select>
-                                </div>
+                                </div> -->
                            <!--     <div class="form-group">
                                     <select required="" class="form-control">
                                         <option value="">All Type</option>
@@ -127,8 +149,31 @@ session_start();
                                     </select>
                                 </div>   -->
                                 <div class="form-group">
-                                    <select required="" class="form-control" name="location">
-                                        <option value="">Location</option>
+                                    <!-- <select required="" class="form-control" name="location"> -->
+
+
+                                         <?php   
+                                                require_once('connect.php');
+                                                $sql = "SELECT location FROM location";
+                                                $result = mysqli_query($con,$sql);
+                                                //echo "<div style=float: right; max-width: 60%; >";
+                                                //echo "<select required="" class=form-control name='location'>";
+                                                //echo "<option value=>Choose...</option>";
+                                                ?>
+
+                                                <select required="" class="form-control" name="location">
+                                                <option value="">Location</option>
+
+                                                <?php
+                                                while ($row = mysqli_fetch_array($result)) 
+                                                    {
+                                                        echo "<option value='" . $row['location'] ."'>" . $row['location'] ."</option>";
+                                                    }
+                                                echo "</select>";
+                                                echo "</div>";
+                                                ?>
+
+                                        <!-- <option value="">Location</option>
                                         <option value="Currentlocation">Current Location</option>
                                         <option value="Cochin">Cochin</option>
                                         <option value="Alappuzha">Alappuzha</option>
@@ -136,7 +181,7 @@ session_start();
                                         <option value="Calicut">Calicut</option>
                                         <option value="Quilon">Kollam</option> 
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <button type="submit" class="btn btn_apt" name="find">Find Here</button>

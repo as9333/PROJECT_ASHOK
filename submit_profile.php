@@ -171,15 +171,37 @@ else
                                         <br>
                                         <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Type Of Developer</h5>
                                         <div style="float: right; max-width: 60%;" >
-                                            <select required="" class="form-control" name="job" >
-                                                <!-- <?php  if($job) {echo $fname;} ?> -->
+                                            <!-- <select required="" class="form-control" name="job" > --> 
+
+                                                <?php   
+                                                require_once('connect.php');
+                                                $sql = "SELECT category FROM category";
+                                                $result = mysqli_query($con,$sql);
+                                                //echo "<div style=float: right; max-width: 60%; >";
+                                                //echo "<select class=form-control name='job'>";
+                                                //echo "<option value=>Choose...</option>";
+                                                ?>
+
+                                                <select required="" class="form-control" name="job" >
                                                 <option value="">Choose...</option>
+
+                                                <?php
+                                                while ($row = mysqli_fetch_array($result)) 
+                                                    {
+                                                        echo "<option value='" . $row['category'] ."'>" . $row['category'] ."</option>";
+                                                    }
+                                                echo "</select>";
+                                                echo "</div>";
+                                                ?>
+
+                                                <!-- <?php  if($job) {echo $fname;} ?> -->
+                                                <!-- <option value="">Choose...</option>
                                                 <option value="PHP Developer">PHP Developers</option>
                                                 <option value="Web Developer">Web Developers</option>
                                                 <option value="Mobile Application Developers">Mobile Application Developers</option>
                                                 <option value="System Analyst">System Analyst</option>
                                             </select>
-                                        </div>
+                                        </div> -->
 
                                         
                                         <br>
@@ -187,8 +209,31 @@ else
                                         <br>
                                         <h5 class="text-wh font-weight-bold" style="color:black; float: left;">Location</h5>
                                         <div style="float: right; max-width: 60%;">
-                                            <select required="" class="form-control" name="location">
-                                                <option value="">Location</option>
+                                            <!-- <select required="" class="form-control" name="location">  -->
+
+                                                <?php   
+                                                require_once('connect.php');
+                                                $sql = "SELECT location FROM location";
+                                                $result = mysqli_query($con,$sql);
+                                                //echo "<div style=float: right; max-width: 60%; >";
+                                                //echo "<select required="" class=form-control name='location'>";
+                                                //echo "<option value=>Choose...</option>";
+                                                ?>
+
+                                                <select required="" class="form-control" name="location" >
+                                                <option value="">Choose...</option>
+
+                                                <?php
+                                                while ($row = mysqli_fetch_array($result)) 
+                                                    {
+                                                        echo "<option value='" . $row['location'] ."'>" . $row['location'] ."</option>";
+                                                    }
+                                                echo "</select>";
+                                                echo "</div>";
+                                                ?>
+
+
+                                                <!-- <option value="">Location</option>
                                                 <option value="Currentlocation">Current Location</option>
                                                 <option value="Cochin">Cochin</option>
                                                 <option value="Alappuzha">Alappuzha</option>
@@ -196,7 +241,7 @@ else
                                                 <option value="Calicut">Calicut</option>
                                                 <option value="Quilon">Kollam</option> 
                                             </select>
-                                        </div>
+                                        </div> -->
 
                                         <br>
                                         <br>
